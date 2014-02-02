@@ -1,0 +1,68 @@
+--
+--	Created by: Andy Lang - http://supportops.co/advanced-email-sign-off/
+--	Created on: 01/03/14 22:23:31
+--
+
+--This script gets called from a text expansion program to insert a date and time customized
+--signoff for support emails, like "Let me know if I can help with anything else, and have an
+--awesome weekend!"
+
+
+
+--This next line sets up a collection of signoffs, which will be randomly used to start the sig
+--It'll be added into the sig as "[Insert random selection here], and have an awesome [day]!"
+--Add as many as you like, separated by commas. The more you have, the better. With four, you're
+--very likely to notice the same one coming up a few times in a row, since it is truly random.
+
+set signoffList to {"Don't hesitate to reach out if we can help with anything else", "Shout back anytime", "Thanks for using our software", "Let us know if there's anything else we can help with"}
+
+set today to weekday of (current date)
+set tomorrow to weekday of ((current date) + (24 * 60 * 60)) --(1 day = 24 hours * 60 minutes * 60 seconds)
+
+get time of (current date) -- number of seconds since midnight 
+if result is less than 64800 then -- earlier than 6p (18 hrs * 60 *60)
+	set timePeriod to "day"
+else if result is less than 79200 then -- earlier than 10p (22 hrs * 60 *60)
+	set timePeriod to "evening"
+else
+	set timePeriod to "late night"
+end if
+
+if (today = Friday) then
+	if timePeriod is not "day" then --If you want to say "weekend" all day Friday, comment out this line by putting -- in front of it
+	
+		set tomorrow to "weekend"
+		set timePeriod to "late night"
+		--Previous line forces it to skip Fri night and just say "weekend"; if they need support that late on Fri, hopes for an awesome Fri night are far gone!
+		
+	end if --If you want to say "weekend" all day Friday, comment out this line by putting -- in front of it
+	
+else if (today = Saturday) then
+	if timePeriod = "day" then
+		set today to "weekend" --if it's early on Sat, say "weekend", otherwise stick to "Saturday night" or "Sunday" as appropriate
+	end if
+	
+	
+else if (today = Sunday) then
+	if timePeriod is not "day" then
+		set tomorrow to "week" --If it's late on Sunday, wish them a great week!
+	end if
+	
+	
+else if (today = Monday) then
+	if timePeriod = "day" then
+		set today to "week" --Likewise, for most of Monday, let's wish them a great week
+	end if
+	
+end if
+
+if timePeriod = "day" then
+	set endPhrase to today as text
+	
+else if timePeriod = "evening" then
+	set endPhrase to (today as text) & " night"
+else
+	set endPhrase to tomorrow as text
+end if
+
+return item (random number from 1 to count signoffList) of signoffList & ", and have an awesome " & endPhrase & "!"
