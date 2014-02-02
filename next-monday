@@ -1,0 +1,7 @@
+--This script enters the date of the next Monday. 
+
+set theDate to (current date) + 1 * days
+repeat until weekday of theDate = Monday
+set theDate to theDate + 1 * days
+end repeat
+set theDate to year of theDate & "-" & (text -2 thru -1 of ("0" & (month of theDate as integer))) & "-" & (text -2 thru -1 of ("0" & (day of theDate as integer))) as string
