@@ -1,0 +1,10 @@
+--This snippet does two things - let's customers know your working hours along with what time it is
+--in your time zone. That way they can submit a new ticket for a faster reply if needed.
+
+Chase Clemons
+Basecamp Support Pro
+
+Please Note: I work M-F 8am-5pm Central Time. It's %I:%M%p Central Time right now. Replies outside of that might be a bit slower.
+
+If you'd like an answer outside of those hours, the quickest route is to send us a new ticket at 
+https://basecamp.com/support. One of our other awesome support pros will get you an answer back right away!
