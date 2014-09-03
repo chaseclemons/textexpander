@@ -1,3 +1,4 @@
--- Everyone loves seeing their name in your reply email to them! To make it simple, copy it to your clipboard and then -- use this handy little snippet to pop it into your reply.
+-- Everyone loves seeing their name in your reply email to them! 
+-- To make it simple, copy it to your clipboard and then use this handy little snippet to pop it into your reply.
 
 Hi %clipboard!
